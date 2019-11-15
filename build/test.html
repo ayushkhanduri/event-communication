@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+    body, html {
+        height: 100%;
+    }
+
+    #react-iframe{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+    <div>
+        This is the main container
+    </div>
+    <iframe id="react-iframe" src="./app.html">
+
+    </iframe>
+
+    <script type="text/javascript" >
+        var iframe = document.getElementById('react-iframe'); 
+        console.log(iframe.contentWindow);
+        
+        $(window).on('routeChange', (event,data) => {
+            console.log("route changed");
+            console.log(event);
+            console.log(data);
+            window.history.pushState({},"",data.pathname);
+            
+        })
+
+        $(window).on('readyState', () => {
+            iframe.contentWindow.postMessage({url: location.pathname},'*');
+        });
+        
+
+    </script>
+</body>
+</html>
